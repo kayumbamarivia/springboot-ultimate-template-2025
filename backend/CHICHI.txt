@@ -1,0 +1,276 @@
+🐋 Ultimate Docker & Docker-Compose Cheat Sheet (50+ Commands)
+📦 A. Container Management
+ 1. Start a Container
+ ex: docker run -d -p 8080:80 --name my nginx
+
+ 2.List Running Containers
+ex1: docker ps           # Running containers
+ex2: docker ps -a        # All containers (including stopped)
+
+ 3. Stop a Container
+ex: ocker stop my
+
+ 4.  Remove a Container
+ex1: docker rm my          # Remove stopped container
+ex2: docker rm -f my       # Force remove (even if running)
+
+ 5. Run Command Inside Container
+ex1: docker exec -it my bash   # Open interactive shell
+ex2: docker exec my ls /app    # Run single command
+
+
+📜 B. Image Management
+ 6. List Images
+ex: docker images
+
+ 7. Download Image
+ex: docker pull nginx:latest
+
+ 8. Build Image from Dockerfile
+ex: docker build -t myapp:1.0 .
+```
+- `-t` → Tag name
+- `.` → Build context (current dir)
+
+ 9. `docker rmi` - Remove Image
+```bash
+docker rmi nginx
+```
+
+ 10. `docker image prune` - Remove Unused Images
+```bash
+docker image prune -a
+```
+
+---
+
+📡 3. Networking
+ 11. `docker network ls` - List Networks
+```bash
+docker network ls
+```
+
+ 12. `docker network create` - Create a Network
+```bash
+docker network create mynet
+```
+
+ 13. `docker network inspect` - Inspect Network
+```bash
+docker network inspect mynet
+```
+
+ 14. `docker network connect` - Connect Container to Network
+```bash
+docker network connect mynet mynginx
+```
+
+ 15. `docker network disconnect` - Disconnect Container
+```bash
+docker network disconnect mynet mynginx
+```
+
+---
+
+💾 4. Volume Management
+ 16. `docker volume ls` - List Volumes
+```bash
+docker volume ls
+```
+
+ 17. `docker volume create` - Create Volume
+```bash
+docker volume create myvol
+```
+
+ 18. `docker volume inspect` - Inspect Volume
+```bash
+docker volume inspect myvol
+```
+
+ 19. `docker volume rm` - Remove Volume
+```bash
+docker volume rm myvol
+```
+
+ 20. `docker volume prune` - Remove Unused Volumes
+```bash
+docker volume prune
+```
+
+---
+
+🚀 5. Docker-Compose Essentials
+ 21. `docker-compose up` - Start Services
+```bash
+docker-compose up -d      # Detached mode
+```
+
+ 22. `docker-compose down` - Stop & Remove Services
+```bash
+docker-compose down
+docker-compose down -v    # Also remove volumes
+```
+
+ 23. `docker-compose ps` - List Services
+```bash
+docker-compose ps
+```
+
+ 24. `docker-compose logs` - View Logs
+```bash
+docker-compose logs
+docker-compose logs -f    # Follow logs
+```
+
+ 25. `docker-compose exec` - Run Command in Service
+```bash
+docker-compose exec app bash
+```
+
+---
+
+🔍 6. Debugging & Inspection
+ 26. `docker logs` - View Container Logs
+```bash
+docker logs mynginx
+docker logs -f mynginx    # Follow logs
+```
+
+ 27. `docker inspect` - Inspect Container
+```bash
+docker inspect mynginx
+```
+
+ 28. `docker stats` - Live Resource Usage
+```bash
+docker stats
+```
+
+ 29. `docker top` - View Running Processes
+```bash
+docker top mynginx
+```
+
+ 30. `docker cp` - Copy Files to/from Container
+```bash
+docker cp mynginx:/etc/nginx/nginx.conf ./nginx.conf
+docker cp ./file.txt mynginx:/app/
+```
+
+---
+
+🧹 7. Cleanup & Maintenance
+ 31. `docker system prune` - Remove Unused Objects
+```bash
+docker system prune       # Remove stopped containers, unused networks
+docker system prune -a    # Also remove unused images
+```
+
+ 32. `docker container prune` - Remove Stopped Containers
+```bash
+docker container prune
+```
+
+ 33. `docker image prune` - Remove Dangling Images
+```bash
+docker image prune
+```
+
+ 34. `docker network prune` - Remove Unused Networks
+```bash
+docker network prune
+```
+
+ 35. `docker volume prune` - Remove Unused Volumes
+```bash
+docker volume prune
+```
+
+---
+
+⚙️ 8. Advanced Commands
+ 36. `docker commit` - Create Image from Container
+```bash
+docker commit mynginx mynginx-custom
+```
+
+ 37. `docker save` - Save Image as Tar File
+```bash
+docker save -o nginx.tar nginx:latest
+```
+
+ 38. `docker load` - Load Image from Tar File
+```bash
+docker load -i nginx.tar
+```
+
+ 39. `docker history` - View Image Layers
+```bash
+docker history nginx
+```
+
+ 40. `docker tag` - Tag an Image
+```bash
+docker tag nginx myrepo/nginx:1.0
+```
+
+---
+
+🔧 9. Docker-Compose Advanced
+ 41. `docker-compose build` - Rebuild Images
+```bash
+docker-compose build
+docker-compose build --no-cache   # Ignore cache
+```
+
+ 42. `docker-compose config` - Validate Compose File
+```bash
+docker-compose config
+```
+
+ 43. `docker-compose pull` - Pull Latest Images
+```bash
+docker-compose pull
+```
+
+ 44. `docker-compose restart` - Restart Services
+```bash
+docker-compose restart
+```
+
+ 45. `docker-compose pause` / `unpause` - Pause Services
+```bash
+docker-compose pause
+docker-compose unpause
+```
+
+---
+
+🔐 10. Security & Permissions
+ 46. `docker login` - Log in to Docker Hub
+```bash
+docker login
+```
+
+ 47. `docker logout` - Log out
+```bash
+docker logout
+```
+
+ 48. `docker scan` - Scan for Vulnerabilities
+```bash
+docker scan nginx
+```
+
+ 49. Run as Non-Root User
+```Dockerfile
+FROM alpine
+RUN adduser -D appuser
+USER appuser
+```
+
+ 50. Read-Only Containers
+```bash
+docker run --read-only -d nginx
+```

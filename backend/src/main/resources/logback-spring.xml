@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- ANSI Color Codes -->
+    <property name="CYAN" value="%cyan"/>
+    <property name="MAGENTA" value="%magenta"/>
+    <property name="GREEN" value="%green"/>
+    <property name="YELLOW" value="%yellow"/>
+    <property name="BLUE" value="%blue"/>
+    <property name="RED" value="%red"/>
+    <property name="BOLD_CYAN" value="%boldCyan"/>
+    <property name="BOLD_MAGENTA" value="%boldMagenta"/>
+    <property name="BOLD_RED" value="%boldRed"/>
+    <property name="BOLD_GREEN" value="%boldGreen"/>
+    <property name="BOLD_YELLOW" value="%boldYellow"/>
+    <property name="BOLD_BLUE" value="%boldBlue"/>
+
+    <!-- Console Appender -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${BOLD_BLUE}(%d{yyyy-MM-dd HH:mm:ss}) ${BOLD_YELLOW}[%thread] ${BOLD_RED}%highlight(%-5level) ${CYAN}%logger{36} ${BOLD_GREEN}- %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!-- Reduce verbosity -->
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+</configuration>

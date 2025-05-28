@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Expiration Notice</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        h1 { color: #005566; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .recommendation { background-color: #e8f4f8; padding: 15px; border-radius: 5px; }
+        .footer { margin-top: 20px; font-size: 0.9em; color: #777; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Token Expiration Notice</h1>
+    <p>Dear <span th:text="${userName}">User</span>,</p>
+    <p>The following electricity tokens associated with your account have expired:</p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Token</th>
+            <th>Meter Number</th>
+            <th>Units (kWh)</th>
+            <th>Expiration Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="token : ${expiredTokens}">
+            <td th:text="${token.tokenValue}"></td>
+            <td th:text="${token.meter.meterNumber}"></td>
+            <td th:text="${token.units}"></td>
+            <td th:text="${token.expiresAt.format(dateFormatter)}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="recommendation">
+        <p><strong>Recommendation:</strong></p>
+        <p th:text="${recommendation}"></p>
+    </div>
+
+    <p>If you have any questions, please contact our support team at <a href="mailto:support@gmail.com">support@example.com</a>.</p>
+
+    <div class="footer">
+        <p>Best regards,<br>Fortress Energy Solutions</p>
+    </div>
+</div>
+</body>
+</html>
