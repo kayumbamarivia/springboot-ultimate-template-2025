@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -57,7 +58,13 @@ public class VehicleService implements VehicleInterface {
             throw new IllegalStateException("Vehicle with chassis number " + request.chassisNumber() + " already exists");
         }
 
-        // Create and save vehicle entity
+        // Validate manufactured year manually
+        int currentYear = LocalDate.now().getYear();
+        if (request.manufacturedYear() > currentYear) {
+            throw new IllegalArgumentException("Manufactured year cannot be in the future.");
+        }
+
+// Create and save vehicle entity
         Vehicle vehicle = Vehicle.builder()
                 .chassisNumber(request.chassisNumber())
                 .manufacturer(request.manufacturer())

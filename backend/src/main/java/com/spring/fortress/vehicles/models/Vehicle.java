@@ -1,5 +1,6 @@
 package com.spring.fortress.vehicles.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,7 +55,7 @@ public class Vehicle {
      * Using Year class for better semantic representation.
      */
     @Column(name = "manufactured_year", nullable = false)
-    private Year manufacturedYear;
+    private Integer manufacturedYear;
 
     /**
      * The price of the vehicle.
@@ -74,12 +75,14 @@ public class Vehicle {
      */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
+    @JsonIgnore
     private Owner owner;
 
     /**
      * The license plate assigned to the vehicle.
      * One-to-one relationship with the Plate entity.
      */
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "vehicle", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    @JsonIgnore
     private Plate plate;
 }

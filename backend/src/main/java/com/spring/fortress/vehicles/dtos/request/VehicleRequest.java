@@ -27,8 +27,7 @@ public record VehicleRequest(
         String manufacturer,
 
         @NotNull(message = "Manufactured year is required")
-        @PastOrPresent(message = "Manufactured year must be in the past or present")
-        Year manufacturedYear,
+        Integer manufacturedYear,
 
         @PositiveOrZero(message = "Price must be zero or positive")
         @DecimalMax(value = "10000000.00", message = "Price must not exceed 10 million")
