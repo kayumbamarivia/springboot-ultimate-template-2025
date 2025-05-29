@@ -1,6 +1,7 @@
 package com.spring.fortress.vehicles.interfaces;
 
 import com.spring.fortress.vehicles.dtos.request.LoginRequest;
+import com.spring.fortress.vehicles.dtos.request.RoleRequest;
 import com.spring.fortress.vehicles.dtos.request.UserRequest;
 import com.spring.fortress.vehicles.dtos.request.VerificationRequest;
 import com.spring.fortress.vehicles.dtos.response.JwtTokenResponse;
@@ -59,4 +60,6 @@ public interface UserInterface {
      * @throws IllegalStateException if the reset code is invalid or user is not found
      */
     String resetPassword(String email, String resetCode, String newPassword);
+
+    String changeRole(RoleRequest re);
 }

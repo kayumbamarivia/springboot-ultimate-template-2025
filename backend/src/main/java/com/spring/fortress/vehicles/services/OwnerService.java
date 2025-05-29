@@ -76,17 +76,13 @@ public class OwnerService implements OwnerInterface {
     }
 
     @Override
-    public List<Owner> getAll() {
-        return List.of();
+    public List<User> getAll() {
+        return ownerRepository.findAllUsersWhoAreOwners();
     }
 
     @Override
-    public List<Owner> search(String searchTerm) {
-        return List.of();
+    public List<User> search(String searchTerm) {
+        return ownerRepository.searchUsersWhoAreOwnersByDetails(searchTerm);
     }
 
-    @Override
-    public Optional<Owner> getById(Long id) {
-        return Optional.empty();
-    }
 }

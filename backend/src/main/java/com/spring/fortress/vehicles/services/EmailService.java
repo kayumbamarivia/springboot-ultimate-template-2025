@@ -55,14 +55,7 @@ public class EmailService {
      * @throws IllegalStateException if email sending fails
      */
     public void sendResetPasswordMail(ResetPasswordRequest request) {
-        log.info("Sending password reset email to: {}", request.email());
-        String subject = "Password Reset Request";
-        String html = "<p>Dear " + request.fullName() + ",</p>"
-                + "<p>You requested to reset your password. Use the following code:</p>"
-                + "<h2>" + request.resetCode() + "</h2>"
-                + "<p>Or click <a href='" + resetPasswordUrl + "'>here</a> to reset your password.</p>"
-                + getCommonSignature();
-        sendEmail(request.email(), subject, html);
+
     }
 
     /**

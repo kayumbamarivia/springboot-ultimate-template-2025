@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public record PlateRequest(
         @NotBlank(message = "Plate number is required")
         @Size(max = 20, message = "Plate number must be 20 characters or less")
-        @Pattern(regexp = "^R[A-Z]{2}\\s\\d{3}\\s[A-Z]$", message = "Plate number must follow format 'RXX 123 X' (e.g., 'RAD 123 B')")
+//        @Pattern(regexp = "^R[A-Z]{2}\\s\\d{3}\\s[A-Z]$", message = "Plate number must follow format 'RXX 123 X' (e.g., 'RAD 123 B')")
         String plateNumber,
 
         @NotNull(message = "Plate status is required")
@@ -39,7 +39,7 @@ public record PlateRequest(
          *
          * @return true if the plate number matches the required format, false otherwise
          */
-        public boolean isValidFormat() {
-                return plateNumber != null && plateNumber.matches("^R[A-Z]{2}\\s\\d{3}\\s[A-Z]$");
-        }
+//        public boolean isValidFormat() {
+//                return plateNumber != null && plateNumber.matches("^R[A-Z]{2}\\s\\d{3}\\s[A-Z]$");
+//        }
 }

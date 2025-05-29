@@ -15,20 +15,5 @@ import java.util.List;
  */
 @Repository
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
-
-    /**
-     * Finds all transfers for a specific vehicle.
-     *
-     * @param vehicleId the ID of the vehicle
-     * @return a list of transfers for the vehicle
-     */
-    List<Transfer> findByVehicleId(Long vehicleId);
-
-    /**
-     * Finds all transfers involving a specific owner (as old or new owner).
-     *
-     * @param ownerId the ID of the owner
-     * @return a list of transfers involving the owner
-     */
-    List<Transfer> findByOldOwnerIdOrNewOwnerId(Long ownerId, Long ownerId2);
+    List<Transfer> findByVehicleIdOrNewOwnerId(Long vehicleId, Long ownerId);
 }

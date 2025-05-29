@@ -84,6 +84,11 @@ public class PlateService implements PlateInterface {
 
     @Override
     public List<Plate> getByOwnerId(Long ownerId) {
-        return List.of();
+        return plateRepository.findByOwnerId(ownerId);
+    }
+
+    @Override
+    public List<Plate> getAll() {
+        return plateRepository.findAll();
     }
 }

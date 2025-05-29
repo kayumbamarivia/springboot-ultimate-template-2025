@@ -31,4 +31,5 @@ public interface PlateInterface {
      * @throws IllegalStateException if the owner is not found
      */
     List<Plate> getByOwnerId(Long ownerId);
+    List<Plate> getAll();
 }

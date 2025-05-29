@@ -2,6 +2,7 @@ package com.spring.fortress.vehicles.interfaces;
 
 import com.spring.fortress.vehicles.dtos.request.OwnerRequest;
 import com.spring.fortress.vehicles.models.Owner;
+import com.spring.fortress.vehicles.models.User;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public interface OwnerInterface {
      *
      * @return a list of all owners
      */
-    List<Owner> getAll();
+    List<User> getAll();
 
     /**
      * Searches for owners by email or name.
@@ -38,14 +39,5 @@ public interface OwnerInterface {
      * @return a list of matching owners
      * @throws IllegalArgumentException if the search term is invalid
      */
-    List<Owner> search(String searchTerm);
-
-    /**
-     * Retrieves an owner by their ID.
-     *
-     * @param id the ID of the owner
-     * @return an optional containing the owner, or empty if not found
-     * @throws IllegalStateException if the owner is not found
-     */
-    Optional<Owner> getById(Long id);
+    List<User> search(String searchTerm);
 }

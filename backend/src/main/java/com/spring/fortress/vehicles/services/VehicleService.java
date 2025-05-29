@@ -75,16 +75,16 @@ public class VehicleService implements VehicleInterface {
 
     @Override
     public List<Vehicle> getAll() {
-        return List.of();
+        return vehicleRepository.findAll();
     }
 
     @Override
     public List<Vehicle> search(String searchTerm) {
-        return List.of();
+        return vehicleRepository.findByChassisNumberContainingIgnoreCaseOrModelNameContainingIgnoreCase(searchTerm, searchTerm);
     }
 
     @Override
     public List<Vehicle> getByOwnerId(Long ownerId) {
-        return List.of();
+        return vehicleRepository.findByOwnerId(ownerId);
     }
 }

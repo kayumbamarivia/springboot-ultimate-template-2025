@@ -3,6 +3,7 @@ package com.spring.fortress.vehicles.controllers;
 import com.spring.fortress.vehicles.dtos.request.OwnerRequest;
 import com.spring.fortress.vehicles.dtos.response.ErrorResponse;
 import com.spring.fortress.vehicles.models.Owner;
+import com.spring.fortress.vehicles.models.User;
 import com.spring.fortress.vehicles.services.OwnerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -69,10 +70,10 @@ public class OwnerController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
     @GetMapping("/all")
-    public ResponseEntity<List<Owner>> getAll() {
+    public ResponseEntity<List<User>> getAll() {
         log.info("Fetching all owners for admin");
-        // Placeholder: Implement ownerRepository.findAll() in OwnerService
-        throw new UnsupportedOperationException("Get all owners not implemented");
+        List<User> result = ownerService.getAll();
+        return ResponseEntity.ok(result);
     }
 
     /**
@@ -90,30 +91,10 @@ public class OwnerController {
             @ApiResponse(responseCode = "403", description = "Unauthorized access")
     })
     @GetMapping("/search/{searchTerm}")
-    public ResponseEntity<List<Owner>> search(@PathVariable String searchTerm) {
+    public ResponseEntity<List<User>> search(@PathVariable String searchTerm) {
         log.info("Searching owners with term: {}", searchTerm);
-        // Placeholder: Implement search logic in OwnerService
-        throw new UnsupportedOperationException("Owner search not implemented");
+        List<User> result = ownerService.search(searchTerm);
+        return ResponseEntity.ok(result);
     }
 
-    /**
-     * Retrieves an owner by ID.
-     *
-     * @param id the ID of the owner
-     * @return a response with the owner details
-     */
-    @Operation(summary = "Get owner by ID", description = "Retrieves an owner by their ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Owner retrieved successfully",
-                    content = @Content(schema = @Schema(implementation = Owner.class))),
-            @ApiResponse(responseCode = "400", description = "Invalid owner ID",
-                    content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
-            @ApiResponse(responseCode = "403", description = "Unauthorized access")
-    })
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Owner> getById(@PathVariable long id) {
-        log.info("Fetching owner with ID: {}", id);
-        // Placeholder: Implement ownerRepository.findById() in OwnerService
-        throw new UnsupportedOperationException("Get owner by ID not implemented");
-    }
 }

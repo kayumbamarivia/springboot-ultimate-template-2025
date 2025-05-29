@@ -105,11 +105,11 @@ public class TransferService implements TransferInterface {
 
     @Override
     public List<Transfer> getAll() {
-        return List.of();
+        return transferRepository.findAll();
     }
 
     @Override
     public List<Transfer> getHistory(Long vehicleId, Long ownerId) {
-        return List.of();
+        return transferRepository.findByVehicleIdOrNewOwnerId(vehicleId, ownerId);
     }
 }

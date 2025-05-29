@@ -72,7 +72,14 @@ public class PlateController {
     @GetMapping("/all/{ownerId}")
     public ResponseEntity<List<Plate>> getAll(@PathVariable long ownerId) {
         log.info("Fetching plates for owner ID: {}", ownerId);
-        // Placeholder: Implement plateRepository.findByOwnerId() in PlateService
-        throw new UnsupportedOperationException("Get plates by owner ID not implemented");
+        List<Plate> p = plateService.getByOwnerId(ownerId);
+        return ResponseEntity.ok(p);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Plate>> getAll() {
+        log.info("Fetching all plates");
+        List<Plate> p = plateService.getAll();
+        return ResponseEntity.ok(p);
     }
 }

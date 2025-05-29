@@ -1,9 +1,6 @@
 package com.spring.fortress.vehicles.controllers;
 
-import com.spring.fortress.vehicles.dtos.request.LoginRequest;
-import com.spring.fortress.vehicles.dtos.request.ResetPasswordRequest;
-import com.spring.fortress.vehicles.dtos.request.UserRequest;
-import com.spring.fortress.vehicles.dtos.request.VerificationRequest;
+import com.spring.fortress.vehicles.dtos.request.*;
 import com.spring.fortress.vehicles.dtos.response.ErrorResponse;
 import com.spring.fortress.vehicles.dtos.response.JwtTokenResponse;
 import com.spring.fortress.vehicles.services.EmailService;
@@ -63,7 +60,7 @@ public class AuthController {
     /**
      * Initiates account activation by sending a verification code.
      *
-     * @param body the request body containing the email
+     * @param email the request body containing the email
      * @return a response indicating the activation status
      */
     @Operation(summary = "Initiate account activation", description = "Sends a verification code to the user's email")
@@ -73,9 +70,8 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid email",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping("/activate")
-    public ResponseEntity<String> activateAccount(@Valid @RequestBody Map<String, String> body) {
-        String email = body.get("email");
+    @PatchMapping("/activate/{email}")
+    public ResponseEntity<String> activateAccount(@Valid @PathVariable String email) {
         log.info("Initiating account activation for email: {}", email);
         userService.activateAccount(email);
         return ResponseEntity.ok("Verification code sent to your email. Please verify your account.");
@@ -121,10 +117,27 @@ public class AuthController {
         return ResponseEntity.ok(result);
     }
 
+
+    /**
+     * Changing the role of the user.
+     *
+     * @param request the role request
+     * @return a response of success message
+     */
+    @Operation(summary = "New role to a user", description = "Changes the role of the user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Role changed successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid credentials")
+    })
+    @PostMapping("/role")
+    public ResponseEntity<String> changeRole(@Valid @RequestBody RoleRequest request) {
+        log.info("Changing role for email: {}", request.email());
+        String result = userService.changeRole(request);
+        return ResponseEntity.ok(result);
+    }
+
     /**
      * Requests a password reset code.
-     *
-     * @param body the request body containing email and full name
      * @return a response indicating the reset code request status
      */
     @Operation(summary = "Request password reset code", description = "Sends a password reset code to the user's email")
@@ -134,10 +147,8 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid request data",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping("/password-reset-code")
-    public ResponseEntity<String> passwordResetCode(@Valid @RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String fullName = body.get("fullName");
+    @PatchMapping("/password-reset-code/{email}/{fullName}")
+    public ResponseEntity<String> passwordResetCode(@Valid @PathVariable String email, @Valid @PathVariable String fullName) {
         log.info("Requesting password reset code for email: {}", email);
         String resetCode = VerificationUtil.generateVerificationCode();
         emailService.sendResetPasswordMail(new ResetPasswordRequest(email, fullName, resetCode));
@@ -146,8 +157,6 @@ public class AuthController {
 
     /**
      * Resets a user's password using a reset code.
-     *
-     * @param body the request body containing email, reset code, and new password
      * @return a response indicating the reset status
      */
     @Operation(summary = "Reset user password", description = "Resets the user's password using a reset code")
@@ -157,14 +166,11 @@ public class AuthController {
             @ApiResponse(responseCode = "400", description = "Invalid reset data",
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     })
-    @PatchMapping("/password-reset")
-    public ResponseEntity<String> passwordReset(@Valid @RequestBody Map<String, String> body) {
-        String email = body.get("email");
-        String resetCode = body.get("resetCode");
-        String newPassword = body.get("newPassword");
+    @PatchMapping("/password-reset/{email}/{resetCode}/{newPassword}")
+    public ResponseEntity<String> passwordReset(@Valid @PathVariable String email, @Valid @PathVariable String resetCode, @Valid @PathVariable String newPassword) {
         log.info("Processing password reset for email: {}", email);
-        // Placeholder: Implement password reset logic in UserService
-        throw new UnsupportedOperationException("Password reset not implemented");
+        String result = userService.resetPassword(email, resetCode, newPassword);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("test")

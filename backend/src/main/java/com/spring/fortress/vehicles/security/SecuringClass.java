@@ -23,6 +23,7 @@ public class SecuringClass {
 
     private static final String[] WHITE_LIST = {
             "/auth/**",
+            "/utility/**",
             "/actuator/metrics",
             "/actuator/health",
             "/actuator/metrics/**",
@@ -36,6 +37,13 @@ public class SecuringClass {
             "/swagger-ui/**",
             "/webjars/**",
             "/swagger-ui.html"
+    };
+
+    private static final String[] ADMIN_WHITELIST = {
+            "/owners/**",
+            "/plates/**",
+            "/transfers/**",
+            "/vehicles/**",
     };
 
     @Bean
@@ -73,6 +81,7 @@ public class SecuringClass {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST).permitAll()
+                        .requestMatchers(ADMIN_WHITELIST).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -85,7 +94,7 @@ public class SecuringClass {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:5173", "http://10.12.72.182:9090", "http://10.12.72.42:9090"));
+        config.setAllowedOrigins(List.of("http://localhost:5173", "http://10.11.73.67:9090"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type", "Accept"));
         config.setAllowCredentials(true);

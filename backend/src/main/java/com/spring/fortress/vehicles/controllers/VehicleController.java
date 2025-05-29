@@ -70,8 +70,8 @@ public class VehicleController {
     @GetMapping("/all")
     public ResponseEntity<List<Vehicle>> getAll() {
         log.info("Fetching all vehicles");
-        // Placeholder: Implement vehicleRepository.findAll() in VehicleService
-        throw new UnsupportedOperationException("Get all vehicles not implemented");
+        List<Vehicle> vehicles = vehicleService.getAll();
+        return ResponseEntity.ok(vehicles);
     }
 
     /**
@@ -91,8 +91,8 @@ public class VehicleController {
     @GetMapping("/search/{searchTerm}")
     public ResponseEntity<List<Vehicle>> search(@PathVariable String searchTerm) {
         log.info("Searching vehicles with term: {}", searchTerm);
-        // Placeholder: Implement search logic in VehicleService
-        throw new UnsupportedOperationException("Vehicle search not implemented");
+        List<Vehicle> vehicles = vehicleService.search(searchTerm);
+        return ResponseEntity.ok(vehicles);
     }
 
     /**
@@ -112,7 +112,7 @@ public class VehicleController {
     @GetMapping("/get/{ownerId}")
     public ResponseEntity<List<Vehicle>> getByOwnerId(@PathVariable long ownerId) {
         log.info("Fetching vehicles for owner ID: {}", ownerId);
-        // Placeholder: Implement vehicleRepository.findByOwnerId() in VehicleService
-        throw new UnsupportedOperationException("Get vehicles by owner ID not implemented");
+        List<Vehicle> vehicles = vehicleService.getByOwnerId(ownerId);
+        return ResponseEntity.ok(vehicles);
     }
 }

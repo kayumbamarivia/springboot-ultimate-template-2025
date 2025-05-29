@@ -70,8 +70,8 @@ public class TransferController {
     @GetMapping("/all")
     public ResponseEntity<List<Transfer>> getAll() {
         log.info("Fetching all transfers");
-        // Placeholder: Implement transferRepository.findAll() in TransferService
-        throw new UnsupportedOperationException("Get all transfers not implemented");
+        List<Transfer> transfers = transferService.getAll();
+        return ResponseEntity.ok(transfers);
     }
 
     /**
@@ -87,10 +87,10 @@ public class TransferController {
                     content = @Content(schema = @Schema(implementation = ErrorResponse.class))),
             @ApiResponse(responseCode = "403", description = "Unauthorized access")
     })
-    @GetMapping("/history")
-    public ResponseEntity<List<Transfer>> getHistory() {
+    @GetMapping("/history/{ownerId}/{vehicleId}")
+    public ResponseEntity<List<Transfer>> getHistory(@PathVariable Long ownerId, @PathVariable Long vehicleId) {
         log.info("Fetching transfer history");
-        // Placeholder: Implement history logic in TransferService
-        throw new UnsupportedOperationException("Get transfer history not implemented");
+        List<Transfer> transfers = transferService.getHistory(vehicleId, ownerId);
+        return ResponseEntity.ok(transfers);
     }
 }
